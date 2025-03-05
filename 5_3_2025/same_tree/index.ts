@@ -71,3 +71,88 @@ function isSameTree(p: TreeNode | null, q: TreeNode | null): boolean {
 
   return isSameTree(p.left, q.left) && isSameTree(p.right, q.right);
 }
+
+// 🔹 Example Walkthrough
+// Example 1: Identical Trees
+// Input:
+
+// Tree p:          Tree q:
+//     1                1
+//    / \              / \
+//   2   3            2   3
+
+// Step-by-Step Execution:
+
+// Compare p = 1 and q = 1 → ✅ Equal
+// Compare p.left = 2 and q.left = 2 → ✅ Equal
+// Compare p.right = 3 and q.right = 3 → ✅ Equal
+// Both subtrees are identical → ✅ Return true
+// Output:
+// true
+
+// Example 2: Different Trees (Structure Mismatch)
+// Input:
+// Tree p:          Tree q:
+//     1                1
+//    /                  \
+//   2                    2
+// Step-by-Step Execution:
+// Compare p = 1 and q = 1 → ✅ Equal
+// Compare p.left = 2 and q.left = null → ❌ Different
+// Return false immediately
+
+// Example 3: Different Trees (Values Mismatch)
+// Tree p:          Tree q:
+//     1                1
+//    / \              / \
+//   2   1            1   2
+// Step-by-Step Execution:
+// Compare p = 1 and q = 1 → ✅ Equal
+// Compare p.left = 2 and q.left = 1 → ❌ Different
+// Return false immediately
+// Output:
+// false
+// 🔹 Time & Space Complexity
+// Approach	Time Complexity	Space Complexity
+// Recursive DFS	O(n)	          (log n to n)
+// Time Complexity: O(n)
+// Each node is visited once, so in the worst case, all n nodes are checked.
+
+// Space Complexity: O(h)
+// The recursion stack uses space proportional to the height of the tree (h):
+
+// Balanced Tree: O(log n)
+// Skewed Tree: O(n)
+
+// Alternative Approach: Iterative BFS (Using a Queue)
+// Instead of using recursion, use an explicit queue (FIFO) to traverse both trees level-by-level.
+// If at any point nodes do not match (either structure or values), return false.
+// Algorithm Breakdown
+
+// Initialize a queue with the root nodes of both trees (p and q).
+// While the queue is not empty:
+// Dequeue two nodes from the queue.
+// If both are null, continue (identical at this level).
+// If one is null while the other is not, return false.
+// If their values differ, return false.
+// Add their left and right children to the queue in a pairwise fashion (p.left, q.left and p.right, q.right).
+// If all levels match, return true.
+
+// TypeScript Implementation
+
+function isSameTreeIterative(p: TreeNode | null, q: TreeNode | null): boolean {
+  const queue: (TreeNode | null)[] = [p, q];
+
+  while (queue.length > 0) {
+    let node1 = queue.shift();
+    let node2 = queue.shift();
+    if (!node1 && !node2) continue;
+    if (!node1 || !node2) return false;
+    if (node1.val !== node2.val) return false;
+
+    queue.push(node1.left, node2.left);
+    queue.push(node1.right, node2.right);
+  }
+
+  return true;
+}
