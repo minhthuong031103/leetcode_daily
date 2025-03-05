@@ -156,3 +156,61 @@ function isSameTreeIterative(p: TreeNode | null, q: TreeNode | null): boolean {
 
   return true;
 }
+
+//  Example Walkthrough
+// Example 1: Identical Trees
+
+// Tree p:          Tree q:
+//     1                1
+//    / \              / \
+//   2   3            2   3
+// Step-by-Step Execution:
+// Step	Queue State (p, q pairs)	                              Action
+// 1	[ (1,1) ]	                                                  Compare 1 == 1 ✅
+// 2	[ (2,2), (3,3) ]	                                        Compare 2 == 2 ✅, Compare 3 == 3 ✅
+// 3	[ (null,null), (null,null), (null,null), (null,null) ]	All are null, continue ✅
+// 4	[] (Queue is empty)	✅ Return true
+
+// Output:
+// true
+
+// Example 2: Different Structure
+// Input:
+// Tree p:          Tree q:
+//     1                1
+//    /                  \
+//   2                    2
+// Step-by-Step Execution:
+// Step	Queue State (p, q pairs)	Action
+// 1	[ (1,1) ]	                    Compare 1 == 1 ✅
+// 2	[ (2,null), (null,2) ]	One node is null, return false ❌
+// Output:
+// false
+
+// Example 3: Different Values
+// Input:
+
+// Tree p:          Tree q:
+//     1                1
+//    / \              / \
+//   2   1            1   2
+// Step-by-Step Execution:
+// Step	Queue State (p, q pairs)	Action
+// 1	[ (1,1) ]	                    Compare 1 == 1 ✅
+// 2	[ (2,1), (1,2) ]	          Values differ! ❌ Return false
+// Output:
+// false
+
+// 🔹 Comparison of Approaches
+// Approach	                    Time Complexity	          Space Complexity	          Best For
+// Recursive DFS	                    O(n)	                    O(h) (log n to n)	          Simplicity, recursion-based problems
+// Iterative BFS (Queue-Based)	O(n)	O                   (n)	                    Handling large/deep trees without recursion limits
+
+// When to Use Which?
+// ✅ Use Recursive DFS when:
+// The recursion depth is manageable (h ≤ log n).
+// You want a clean and elegant recursive solution.
+// ✅ Use Iterative BFS (Queue-Based) when:
+
+// The tree is very deep and recursion might cause a stack overflow.
+// You need a level-by-level traversal approach.
